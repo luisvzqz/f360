@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_form_inherit_360fin" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.360fin</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                      <field name="z_persona"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="studio_page_4GKIo" string="Identificación" attrs="{'invisible': [('z_persona', '=', False)]}">
+                      <group name="studio_group_4GKIo">
+                        <group name="studio_group_4GKIo_l">
+                          <div class="oe_edit_only">
+                                <button string="Verifica" type="object" name="verifica_pld" class="oe_highlight"/>
+                                <field name="z_persona_gpo" attrs="{'invisible': 1}"/>
+                                <field name="z_persona_cod" attrs="{'invisible': 1}"/>
+                          </div>
+                        </group>
+                      </group>
+                      <group name="studio_group_jmkT8">
+                        <group name="studio_group_jmkT8_left" string="Datos" attrs="{'invisible': [('is_company', '=',True)]}">
+                          <field name="z_ind_nombre"/>
+                          <field name="z_ind_paterno"/>
+                          <field name="z_ind_materno"/>
+                          <field name="z_ind_nacimiento"/>
+                          <field name="z_ind_genero"/>
+                          <field name="z_ind_nac_pais"/>
+                          <field name="z_ind_nac_estado"/>
+                          <field name="z_ind_nacionalidad"/>
+                          <field name="z_ind_ocupacion"/>
+                          <field name="z_ind_curp"/>
+                          <field name="z_ind_curp_doc"/>
+                          <field name="z_ind_id"/>
+                          <field name="z_ind_id_doc"/>
+                        </group>
+                        <group name="studio_group_jmkT8_left" string="Datos" attrs="{'invisible': [('is_company', '!=',True)]}">
+                          <field name="z_com_nombre"/>
+                          <field name="z_com_nacionalidad"/>
+                          <field name="z_com_ocupacion"/>
+                          <field name="z_com_estado"/>
+                          <field name="z_com_constitucion"/>
+                          <field name="z_com_socio_child"/>
+                          <field name="z_com_socio_porcentaje"/>
+                          <field name="z_com_acta"/>
+                          <field name="z_com_aviso"/>
+                          <field name="z_com_entidad_is"/>
+                          <field name="z_com_entidad" attrs="{'invisible': [('z_com_entidad_is', '!=',True)]}"/>
+                          <field name="z_com_entidad_reg" attrs="{'invisible': [('z_com_entidad_is', '!=',True)]}"/>/>
+                          <field name="z_com_estr_acc"/>
+                          <field name="z_com_org"/>
+                          <field name="z_com_fid_is"/>
+                        </group>
+                        <group name="studio_group_jmkT8_right" string="Preguntas y Docs">
+                          <field name="z_rfc_doc"/>
+                          <field name="z_fea"/>
+                          <field name="z_fea_doc"/>
+                          <field name="z_dom"/>
+                          <field name="z_dom_doc"/>
+                          <field name="z_contrato_doc"/>
+                          <field name="z_eval_riesgo_per"/>
+                          <field name="z_entrevista"/>
+                        </group>
+                        <group name="asociados" string="Personas Asociadas" attrs="{'invisible': ['|','|','|',('z_persona_cod', '=','COA'),('z_persona_cod', '=','BEN'),('z_persona_cod', '=','APO'),('z_persona_cod', '=','3RO')]}">
+                          <field name="z_portercero_is"/>
+                          <field name="z_portercero" attrs="{'invisible': [('z_portercero_is', '!=',True)]}"/>/>
+                          <field name="z_apoderado_is"/>
+                          <field name="z_apoderado" attrs="{'invisible': [('z_apoderado_is', '!=',True)]}"/>
+                          <field name="z_apoderado_doc" attrs="{'invisible': [('z_apoderado_is', '!=',True)]}"/>
+                          <field name="z_coacreditados_is"/>
+                          <field name="z_coacreditados_child" attrs="{'invisible': [('z_coacreditados_is', '!=',True)]}" />
+                          <field name="z_beneficiarios_is"/>
+                          <field name="z_beneficiarios_child" attrs="{'invisible': [('z_beneficiarios_is', '!=',True)]}"/>
+                          <field name="z_provrecursos_is"/>
+                          <field name="z_provrecursos" attrs="{'invisible': [('z_provrecursos_is', '!=',True)]}"/>
+                        </group>
+                        <group name="fideicomiso" string="Fideicomiso" attrs="{'invisible': ['|',('is_company', '!=',True),('z_com_fid_is','!=',True)]}">
+                          <field name="z_com_fid_num"/>
+                          <field name="z_com_fid_act_is"/>
+                          <field name="z_com_fid_act" attrs="{'invisible': [('z_provrecursos_is', '!=',True)]}"/>
+                          <field name="z_com_fid_child"/>
+                          <field name="z_com_fid_aportacion"/>
+                          <field name="z_com_fid_patrim"/>
+                          <field name="z_com_fid_fid_child"/>
+                          <field name="z_com_fid_del_child"/>
+                          <field name="z_com_fid_cte_child"/>
+                          <field name="z_com_fid_noint_prest_is"/>
+                          <field name="z_com_fid_noint_prest_gob_is"/>
+                          <field name="z_com_fid_noint_prest_cnt_is"/>
+                          <field name="z_com_fid_noint_prest_cla_is"/>
+                          <field name="z_com_fid_noint_prest_ent_is"/>
+                          <field name="z_com_fid_noint_prest_exp_is"/>
+                        </group>
+                      </group>
+                      <group name="riesgo">
+                        <group name="riesgo_l" string="Riesgo">
+                          <field name="z_riesgo_neg"/>
+                          <field name="z_riesgo_rie"/>
+                          <field name="z_lista_negra"/>
+                        </group>
+                        <group name="riesgo_r" string="Evaluación">
+                          <field name="z_riesgo_pro"/>
+                          <field name="z_riesgo_loc"/>
+                          <field name="z_riesgo_mto"/>
+                          <field name="z_riesgo_act"/>
+                          <field name="z_riesgo_mon"/>
+                          <field name="z_riesgo_per"/>
+                          <field name="z_riesgo_nac"/>
+                          <field name="z_riesgo_mer"/>
+                          <field name="z_riesgo_ins"/>
+                          <field name="z_riesgo"/>
+                        </group>
+                      </group>
+                    </page>
+                </xpath>
+            </field>
+          </record>
+    </data>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale.view_order_form_inherit_360fin" model="ir.ui.view">
+            <field name="name">sale.view.order.form.inherit.360fin</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="credito_page" string="Crédito" attrs="{'invisible': [('z_credito_is', '=', False)]}">
+                  <group name="credito_group">
+                    <group name="credito_l">
+                      <field name="client_order_ref"/>
+                      <field name="z_credito_cod"/>
+                      <field name="z_monto"/>
+                      <field name="z_enganche"/>
+                      <field name="z_tasa_anual"/>
+                      <field name="z_tax_id"/>
+                      <field name="z_tax_mode"/>
+                      <field name="z_vr"/>
+                      <field name="z_plazo"/>
+                      <field name="z_periodo"/>
+                      <field name="z_date"/>
+                    </group>
+                    <group name="credito_r">
+                      <field name="z_monto_men"/>
+                      <field name="z_monto_efe"/>
+                      <field name="z_monto_iva"/>
+                      <field name="z_credito"/>
+                      <field name="z_tasa"/>
+                      <field name="z_pago"/>
+                      <field name="z_operacion"/>
+                      <field name="z_operacion_iva"/>
+                      <field name="z_n"/>
+                      <field name="z_capital"/>
+                      <field name="z_interes"/>
+                      <field name="z_iva"/>
+                    </group>
+                  </group>
+                </page>
+                <page name="amortiza" string="Amortización" attrs="{'invisible': [('z_credito_is', '=', False)]}">
+                        <div class="oe_edit_only">
+                            <button string="Calcular Amortización" type="object" name="amortiza" class="oe_highlight"/>
+                        </div>
+                        <field name="z_amortiza"/>
+                </page>
+              </xpath>
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/form[1]/group[1]/group[1]/field[@name='product_id']" position="after">
+                  <field name="z_credito_is" attrs="{'invisible': 1}"/>
+                  <field name="z_credito_cod" attrs="{'invisible': 1}"/>
+              </xpath>
+              <xpath expr="//field[@name='z_amortiza']" position="inside">
+                    <tree string="Amortización" delete="true" create="false" edit="false">
+                        <field name="x_n" string="No." on_change="1" modifiers="{}"/>
+                        <field name="x_date" string="Fecha"/>
+                        <field name="x_loan_ini" string="Saldo Inicial"/>
+                        <field name="x_capital" string="Capital"/>
+                        <field name="x_rate" string="Intereses"/>
+                        <field name="x_tax" string="Impuestos"/>
+                        <field name="x_pay" string="Pago"/>
+                        <field name="x_loan_fin" string="Saldo Final"/>
+                        <field name="x_pay_tax" string="Pago c/IVA"/>
+                        <field name="x_balance_tax" string="Balance c/IVA"/>
+                    </tree>
+              </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
