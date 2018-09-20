@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_form_inherit_360fin" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.360fin</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//field[@name='category_id']" position="after">
+                      <field name="z_persona"/>
+                      <field name="z_cnbv"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="id_page" string="Identificación" attrs="{'invisible': [('z_persona', '=', False)]}">
+                      <group name="studio_group_jmkT8">
+                        <group name="person_left" string="Datos" attrs="{'invisible': [('is_company', '=',True)]}">
+                          <field name="z_ind_nombre"/>
+                          <field name="z_ind_paterno"/>
+                          <field name="z_ind_materno"/>
+                          <field name="z_ind_nacimiento"/>
+                          <field name="z_ind_genero"/>
+                          <field name="z_ind_nac_pais"/>
+                          <field name="z_ind_nac_estado"/>
+                          <field name="z_ind_nacionalidad"/>
+                          <field name="z_ind_ocupacion"/>
+                          <field name="z_ind_ocupacion_cnbv"/>
+                          <field name="z_ind_curp"/>
+                          <field name="z_ind_curp_doc"/>
+                          <field name="z_ind_id"/>
+                          <field name="z_ind_id_doc"/>
+                        </group>
+                        <group name="company_left" string="Datos" attrs="{'invisible': [('is_company', '!=',True)]}">
+                          <field name="z_com_nombre"/>
+                          <field name="z_com_nacionalidad"/>
+                          <field name="z_com_ocupacion"/>
+                          <field name="z_com_ocupacion_cnbv"/>
+                          <field name="z_com_estado"/>
+                          <field name="z_com_constitucion"/>
+                          <field name="z_com_acta"/>
+                          <field name="z_com_aviso"/>
+                          <field name="z_com_entidad_is"/>
+                          <field name="z_com_entidad" attrs="{'invisible': [('z_com_entidad_is', '!=',True)]}"/>
+                          <field name="z_com_entidad_reg" attrs="{'invisible': [('z_com_entidad_is', '!=',True)]}"/>
+                          <field name="z_com_estr_acc"/>
+                          <field name="z_com_org"/>
+                          <field name="z_com_fid_is"/>
+                        </group>
+                        <group name="preguntas" string="Preguntas y Docs">
+                          <field name="z_rfc_doc"/>
+                          <field name="z_fea"/>
+                          <field name="z_fea_doc"/>
+                          <field name="z_dom"/>
+                          <field name="z_dom_doc"/>
+                          <field name="z_contrato_doc"/>
+                          <field name="z_monto_men"/>
+                          <field name="z_monto_efe"/>
+                          <field name="z_eval_riesgo_per"/>
+                          <field name="z_entrevista"/>
+                          <field name="z_socio_is" attrs="{'invisible': [('parent_id', '=',False)]}"/>
+                          <field name="z_socio_per" attrs="{'invisible': [('z_socio_is', '!=',True)]}"/>
+                          <field name="z_socio_mon" attrs="{'invisible': [('z_socio_is', '!=',True)]}"/>
+                          <field name="z_fideicomitente_is" attrs="{'invisible': [('parent_id', '=',False)]}"/>
+                          <field name="z_fideicomitente_per" attrs="{'invisible': [('z_fideicomitente_is', '!=',True)]}"/>
+                          <field name="z_fideicomitente_mon" attrs="{'invisible': [('z_fideicomitente_is', '!=',True)]}"/>
+                          <field name="z_fideicomitente_pat" attrs="{'invisible': [('z_fideicomitente_is', '!=',True)]}"/>
+                          <field name="z_fideicomisario_is" attrs="{'invisible': [('parent_id', '=',False)]}"/>
+                          <field name="z_coacreditado_is" attrs="{'invisible': [('parent_id', '=',False)]}"/>
+                          <field name="z_provreal_is" attrs="{'invisible': [('parent_id', '=',False)]}"/>
+                          <field name="z_beneficiario_is" attrs="{'invisible': [('parent_id', '=',False)]}"/>
+                        </group>
+                        <group name="fin_miembro" string="Miembro Sociedad Financiera" attrs="{'invisible': [('z_fin_is', '=',False)]}">
+                           <field name="z_fin_consejo_is"/>
+                           <field name="z_fin_ccc_is"/>
+                           <field name="z_fin_ctl_is"/>
+                        </group>
+                        <group name="fin_sociedad" string="Sociedad Financiera" attrs="{'invisible': [('z_fin_is_is', '=',False)]}">
+                           <field name="z_fin_consejo"/>
+                           <field name="z_fin_ccc"/>
+                           <field name="z_fin_ctl"/>
+                        </group>
+                        <group name="asociados" string="Personas Asociadas" attrs="{'invisible': ['|','|','|',('z_persona_cod', '=','COA'),('z_persona_cod', '=','BEN'),('z_persona_cod', '=','APO'),('z_persona_cod', '=','3RO')]}">
+                          <field name="z_socio" attrs="{'invisible': [('parent_id', '!=',False)]}"/>
+                          <field name="z_portercero_is"/>
+                          <field name="z_portercero" attrs="{'invisible': [('z_portercero_is', '!=',True)]}"/>
+                          <field name="z_apoderado_is"/>
+                          <field name="z_apoderado" attrs="{'invisible': [('z_apoderado_is', '!=',True)]}"/>
+                          <field name="z_apoderado_doc" attrs="{'invisible': [('z_apoderado_is', '!=',True)]}"/>
+                          <field name="z_coacreditado" attrs="{'invisible': [('parent_id', '!=',False)]}" />
+                          <field name="z_provreal" attrs="{'invisible': [('parent_id', '!=',False)]}" />
+                          <field name="z_beneficiario" attrs="{'invisible': [('parent_id', '!=',False)]}"/>
+                          <field name="z_provrecursos_is"/>
+                          <field name="z_provrecursos" attrs="{'invisible': [('z_provrecursos_is', '!=',True)]}"/>
+                        </group>
+                        <group name="fideicomiso" string="Fideicomiso" attrs="{'invisible': ['|',('is_company', '!=',True),('z_com_fid_is','!=',True)]}">
+                          <field name="z_com_fid_num"/>
+                          <field name="z_com_fid_act_is"/>
+                          <field name="z_com_fid_act" attrs="{'invisible': [('z_com_fid_act_is', '!=',True)]}"/>
+                          <field name="z_com_fid_act_cnbv" attrs="{'invisible': [('z_com_fid_act_is', '!=',True)]}"/>
+                          <field name="z_com_fid_noint_prest_is"/>
+                          <field name="z_com_fid_noint_prest_gob_is"/>
+                          <field name="z_com_fid_noint_prest_cnt_is"/>
+                          <field name="z_com_fid_noint_prest_cla_is"/>
+                          <field name="z_com_fid_noint_prest_ent_is"/>
+                          <field name="z_com_fid_noint_prest_exp_is"/>
+                          <field name="z_fideicomitente" attrs="{'invisible': ['|',('parent_id', '!=',False),('z_com_fid_is','!=',True)]}"/>
+                          <field name="z_fideicomisario" attrs="{'invisible': ['|',('parent_id', '!=',False),('z_com_fid_is','!=',True)]}"/>
+                          <field name="z_delegado" attrs="{'invisible': ['|',('parent_id', '!=',False),('z_com_fid_is','!=',True)]}"/>
+                          <field name="z_comite" attrs="{'invisible': ['|',('parent_id', '!=',False),('z_com_fid_is','!=',True)]}"/>
+                        </group>
+                      </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                     <page name="riesgo_page" string="Riesgos" attrs="{'invisible': [('z_persona', '=', False)]}">
+                        <group name="pld_verifica">
+                          <div class="oe_edit_only">
+                                <button string="Verifica Listas Negras" type="object" name="verifica_pld" class="oe_highlight"/>
+                                <separator>  </separator>
+                                <button string="Evalua Impactos" type="object" name="evalua_impacto" class="oe_highlight"/>
+                                <field name="z_persona_gpo" attrs="{'invisible': 1}"/>
+                                <field name="z_persona_cod" attrs="{'invisible': 1}"/>
+                                <field name="z_fin_is" attrs="{'invisible': 1}"/>
+                                <field name="z_fin_is_is" attrs="{'invisible': 1}"/>
+                          </div>
+                        </group>
+                        <group name="riesgo" string="Riesgo">
+                          <field name="z_riesgo_neg"/>
+                          <field name="z_riesgo_rie"/>
+                          <field name="z_lista_negra"/>
+                        </group>
+                      <group name="eval_riesgos">
+                        <group name="impacto" string="Impacto">
+                          <field name="z_persona_imp"/>
+                          <field name="z_localidad_imp"/>
+
+                          <field name="z_com_nacionalidad_imp" attrs="{'invisible': [('is_company', '=',False)]}"/>
+                          <field name="z_com_estado_imp" attrs="{'invisible': [('is_company', '=',False)]}"/>
+                          <field name="z_com_ocupacion_imp" attrs="{'invisible': [('is_company', '=',False)]}"/>
+                          <field name="z_com_fid_act_imp" attrs="{'invisible': [('z_com_fid_act_is', '!=',True)]}"/>
+
+                          <field name="z_ind_nacionalidad_imp" attrs="{'invisible': [('is_company', '=',True)]}"/>
+                          <field name="z_ind_ocupacion_imp" attrs="{'invisible': [('is_company', '=',True)]}"/>
+                          <field name="z_ind_nac_pais_imp" attrs="{'invisible': [('is_company', '=',True)]}"/>
+                          <field name="z_ind_nac_estado_imp" attrs="{'invisible': [('is_company', '=',True)]}"/>
+                        </group>
+                        <group name="evaluacion" string="Evaluación">
+                          <field name="z_riesgo_pro"/>
+                          <field name="z_riesgo_loc"/>
+                          <field name="z_riesgo_mto"/>
+                          <field name="z_riesgo_act"/>
+                          <field name="z_riesgo_mon"/>
+                          <field name="z_riesgo_per"/>
+                          <field name="z_riesgo_nac"/>
+                          <field name="z_riesgo_mer"/>
+                          <field name="z_riesgo_ins"/>
+                          <field name="z_riesgo"/>
+                        </group>
+                      </group>
+                   </page>
+                </xpath>
+                <xpath expr="//field[@name='z_socio']" position="inside">
+                    <tree string="Socios" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                        <field name="z_socio_per"/>
+                        <field name="z_socio_mon"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_beneficiario']" position="inside">
+                    <tree string="Beneficiarios" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_coacreditado']" position="inside">
+                    <tree string="Coacreditado" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_provreal']" position="inside">
+                    <tree string="Proveedor Real" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_lista_negra']" position="inside">
+                    <tree string="Lista Negra" delete="false" create="false" edit="false">
+                        <field name="x_denominacion"/>
+                        <field name="x_status" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_fideicomitente']" position="inside">
+                     <tree string="Fideicomitente" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                        <field name="z_fideicomitente_per"/>
+                        <field name="z_fideicomitente_mon"/>
+                        <field name="z_fideicomitente_pat"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_fideicomisario']" position="inside">
+                    <tree string="Fideicomisarios" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_delegado']" position="inside">
+                    <tree string="Delegados" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_comite']" position="inside">
+                    <tree string="Cómite Técnico" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_fin_consejo']" position="inside">
+                    <tree string="Consejo" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                        <field name="function" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_fin_ccc']" position="inside">
+                    <tree string="CCC" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                        <field name="function" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_fin_ctl']" position="inside">
+                    <tree string="Personas Controlan" delete="false" create="false" edit="false">
+                        <field name="name" on_change="1" modifiers="{}"/>
+                        <field name="function" on_change="1" modifiers="{}"/>
+                    </tree>
+                </xpath>
+            </field>
+          </record>
+    </data>
+</odoo>

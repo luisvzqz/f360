@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_360fin_360fin,360fin.360fin,model_360fin_360fin,,1,0,0,0

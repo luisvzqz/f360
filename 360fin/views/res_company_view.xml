@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_company_form_inherit_360fin" model="ir.ui.view">
+            <field name="name">res.company.form.inherit.360fin</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_registry']" position="after">
+                    <field name="z_regulador"/>
+                    <field name="z_escrituras"/>
+                    <field name="z_siti_usuario"/>
+                    <field name="z_siti_password"/>
+                    <field name="z_gpo_fin_is"/>
+                    <field name="z_ocupacion"/>
+                    <field name="z_ocupacion_cnbv"/>
+                    <field name="z_inicio_ope"/>
+                    <field name="z_nacionalidad"/>
+                </xpath>
+
+                <xpath expr=".//field[@name='street2']" position="after">
+                    <field name="z_zip_id" placeholder="Código Postal..."/>
+                    <field name="z_colonia_id" placeholder="Colonia..."/>
+                    <field name="z_municipio_id" placeholder="Municipio..."/>
+                    <field name="z_localidad_id" placeholder="Localidad..."/>
+                </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="riesgo" string="Riesgos">
+                      <group name="riesgo">
+                        <group name="riesgo_l" string="Riesgo">
+                          <field name="z_riesgo_rie"/>
+                          <field name="z_localidad_imp"/>
+                          <field name="z_nacionalidad_imp"/>
+                          <field name="z_estado_imp"/>
+                          <field name="z_ocupacion_imp"/>
+                          <field name="z_moneda_imp"/>
+                        </group>
+                        <group name="riesgo_r" string="Evaluación">
+                          <field name="z_riesgo_pro"/>
+                          <field name="z_riesgo_loc"/>
+                          <field name="z_riesgo_mto"/>
+                          <field name="z_riesgo_act"/>
+                          <field name="z_riesgo_mon"/>
+                          <field name="z_riesgo_per"/>
+                          <field name="z_riesgo_nac"/>
+                          <field name="z_riesgo_mer"/>
+                          <field name="z_riesgo_ins"/>
+                          <field name="z_riesgo"/>
+                        </group>
+                      </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="fin" string="Finanzas">
+                      <group name="actualiza">
+                          <div class="oe_edit_only">
+                                <button string="Actualiza" type="object" name="act_datos" class="oe_highlight"/>
+                          </div>
+                      </group>
+                      <group name="info">
+                        <group name="res_fin" string="Resumen Financiero">
+                          <field name="z_fin_cartera"/>
+                          <field name="z_fin_vencida"/>
+                          <field name="z_fin_activos"/>
+                          <field name="z_fin_pasivos"/>
+                          <field name="z_fin_capital"/>
+                          <field name="z_fin_ingreso"/>
+                          <field name="z_fin_credito"/>
+                          <field name="z_fin_perdida_porc"/>
+                          <field name="z_fin_perdida"/>
+                        </group>
+                        <group name="datos_fin" string="Datos">
+                            <field name="z_probabilidad"/>
+                            <field name="z_evento"/>
+                            <field name="z_no_employee"/>
+                            <field name="z_no_customer"/>
+                            <field name="z_monto"/>
+                            <field name="z_plazo"/>
+                            <field name="z_prob"/>
+                            <field name="z_impacto"/>
+                            <field name="z_event"/>
+                        </group>
+                      </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="employee" string="Empleados">
+                        <field name="z_empleados"/>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='z_plazo']" position="inside">
+                    <tree string="Plazo" delete="false" create="false" editable="top">
+                        <field name="x_impacto"/>
+                        <field name="x_name" on_change="1" modifiers="{}"/>
+                        <field name="x_min"/>
+                        <field name="x_max"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_impacto']" position="inside">
+                    <tree string="Impacto" delete="false" create="false" editable="top">
+                        <field name="x_impacto"/>
+                        <field name="x_name" on_change="1" modifiers="{}"/>
+                        <field name="x_min"/>
+                        <field name="x_max"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_monto']" position="inside">
+                    <tree string="360fin.monto" delete="false" create="false" editable="top">
+                      <field name="x_impacto" modifiers="{}"/>
+                      <field name="x_name" modifiers="{}"/>
+                      <field name="x_min" modifiers="{}"/>
+                      <field name="x_max" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_prob']" position="inside">
+                    <tree string="360fin.probabilidad" delete="false" create="false" editable="top">
+                      <field name="x_impacto" modifiers="{}"/>
+                      <field name="x_name" modifiers="{}"/>
+                      <field name="x_min" modifiers="{}"/>
+                      <field name="x_max" modifiers="{}"/>
+                      <field name="x_min_customer"/>
+                      <field name="x_max_customer"/>
+                      <field name="x_min_employee"/>
+                      <field name="x_max_employee"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_impacto']" position="inside">
+                    <tree string="360fin.impacto" delete="false" create="false" editable="top">
+                      <field name="x_impacto" modifiers="{}"/>
+                      <field name="x_name" modifiers="{}"/>
+                      <field name="x_min" modifiers="{}"/>
+                      <field name="x_max" modifiers="{}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_event']" position="inside">
+                    <tree string="360fin.evento" delete="false" create="false" editable="top">
+                      <field name="x_name" modifiers="{}"/>
+                      <field name="x_prob" on_change="1" modifiers="{}"/>
+                      <field name="x_legal" on_change="1" modifiers="{}"/>
+                      <field name="x_reput" on_change="1" modifiers="{}"/>
+                      <field name="x_contagio" on_change="1" modifiers="{}"/>
+                      <field name="x_oper" on_change="1" modifiers="{}"/>
+                      <field name="x_promedio" on_change="1" modifiers="{&quot;readonly&quot;: true}"/>
+                      <field name="x_riesgo" modifiers="{&quot;readonly&quot;: true}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_empleados']" position="inside">
+                    <tree string="Employees" decoration-bf="message_needaction==True">
+                      <field name="name" on_change="1" modifiers="{}"/>
+                      <field name="job_id" string="Puesto"/>
+                      <field name="z_riesgo_neg" string="Nivel de Lista"/>
+                      <field name="z_revisada_is" string="Revisi Auditor"/>
+                      <field name="z_id_is" string="Id Oficial"/>
+                      <field name="z_cv_is" string="CV"/>
+                      <field name="z_dom_is" string="Domicilio"/>
+                      <field name="z_pld_is" string="Listas Negras"/>
+                      <field name="z_dec_is" string="Declaración"/>
+                      <field name="z_cap_is" string="Capacitación"/>
+                      <field name="z_eva_is"/>
+                      <field name="z_man_is" string="Manual"/>
+                      <field name="z_cumple" string="%"/>
+                      <field name="coach_id" invisible="1" can_create="true" can_write="true" modifiers="{&quot;column_invisible&quot;: true}"/>
+                      <field name="message_needaction" invisible="1" modifiers="{&quot;readonly&quot;: true, &quot;column_invisible&quot;: true}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='z_escrituras']" position="inside">
+                    <tree string="360fin.escrituras">
+                      <field name="x_name" modifiers="{}"/>
+                      <field name="x_tipo"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

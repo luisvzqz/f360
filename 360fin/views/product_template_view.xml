@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product.product_template_form_inherit_360fin" model="ir.ui.view">
+            <field name="name">product.template.form.inherit.360fin</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="credito" string="Crédito">
+                      <group name="credito">
+                        <group name="credito_l" string="Crédito" >
+                          <field name="z_credito_is"/>
+                          <field name="z_credito_tip"/>
+                          <field name="z_credito_cod"/>
+                          <field name="z_monto_imp"/>
+                          <field name="z_plazo_imp"/>
+                          <field name="z_aval_imp"/>
+                          <field name="z_garantia_imp"/>
+                          <field name="z_mercado_imp"/>
+                          <field name="z_moneda_imp"/>
+                          <field name="z_cartera_imp"/>
+                          <field name="z_impacto"/>
+                        </group>
+                        <group name="credito_r" string="Datos">
+                          <field name="z_credito"/>
+                          <field name="z_interes"/>
+                          <field name="z_monto_max"/>
+                          <field name="z_monto_min"/>
+                          <field name="z_plazo"/>
+                          <field name="z_plazo_max"/>
+                          <field name="z_periodo"/>
+                          <field name="z_n"/>
+                          <field name="z_tasa"/>
+                          <field name="z_tasa_max"/>
+                          <field name="z_tasa_min"/>
+                          <field name="z_vr" attrs="{'invisible': [('z_credito_cod', '!=','ARRE')]}"/>
+                          <field name="z_pago"/>
+                          <field name="z_aval"/>
+                          <field name="z_garantia"/>
+                          <field name="z_mercado"/>
+                          <field name="z_cartera"/>
+                        </group>
+                      </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
