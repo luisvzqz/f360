@@ -31,7 +31,7 @@ from . import f360_pld
 from . import f360_probabilidad
 from . import f360_regulador
 from . import f360_reportes
-from . import f360f360_vulnerables
+from . import f360_vulnerables
 from . import f360_zipcode
 
 from . import res_company
