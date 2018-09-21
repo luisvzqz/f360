@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "360fin",
+    'name': "fin360",
 
     'summary': """
-        Financial Tool for small / medium financial entities 
+        Financial Tool for small / medium financial entities
         AML, Loans, Accounting, Inventory and more """,
 
     'description': """
-        ERP for small / medium financial entities      
+        ERP for small / medium financial entities
         AML, Loans, Accounting, Inventory and more
     """,
 
