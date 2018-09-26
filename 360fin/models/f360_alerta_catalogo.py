@@ -9,7 +9,7 @@ AVAILABLE_PRIORITIES = [
     ('2', 'High'),
     ('3', 'Very High'),
 ]
-#prueba
+#pruebas
 
 class Catalogo(models.Model):
 
