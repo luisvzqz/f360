@@ -9,7 +9,7 @@ AVAILABLE_PRIORITIES = [
     ('2', 'High'),
     ('3', 'Very High'),
 ]
-
+#prueba
 
 class Catalogo(models.Model):
 
@@ -30,5 +30,3 @@ class Catalogo(models.Model):
     type =  fields.Selection([('0', 'ND'), ('1', 'Inusual'), ('2', 'Relevante'),('3','Inusual/Relevante'), ('4','Listas Negras') ],
         string='Tipo de alerta')
     count = fields.Integer('Cuenta', default=0)
-
-
