@@ -30,6 +30,7 @@ class F360Alerta(models.Model):
     def _default_stage_id(self):
         return self._stage_find(domain=[('fold', '=', False)]).id
 
+    id = fields.Integer('Id', required=False, index=False, store=True, readonly=True, copy=True)
     name = fields.Char('Alerta', required=True, index=True, readonly=True)
     active = fields.Boolean('Active', default=True)
     date_action_last = fields.Datetime('Last Action', readonly=True)
@@ -55,6 +56,10 @@ class F360Alerta(models.Model):
     date_deadline = fields.Date('Expected Closing', help="Estimate of the date on which the alert will be late.")
     color = fields.Integer('Color Index', default=0)
 
+    #Display
+    display_name = fields.Char(comodel_name="x_360fin.alerta.catalogo", string="Display name", required=False,
+                                     help="Display name", readonly=True)
+
     # Alerts
     alert_id = fields.Many2one(comodel_name="x_360fin.alerta.catalogo", string="Alerta id", required=False,
                                      help="Alerta id", readonly=True)
@@ -72,12 +77,24 @@ class F360Alerta(models.Model):
 
     message = fields.Text('Message of Alert', help="Enter here the message of the alert", readonly=True)
 
+    message_channel_ids = fields.Many2one('Followers (Channels)', readonly=True)
+
+    message_is_follower = fields.Boolean('Is Follower', readonly=True)
+
+    message_is_needaction = fields.Boolean('Followers (Partners)', readonly=True)
+
+    message_is_needaction_counter = fields.Integer('Number of actions', readonly=True)
+
+    message_is_partner_ids = fields.Many2many('Follower (Partners)', readonly=True)
+
+    message_unread = fields.Boolean('Unread Messages', readonly=True)
+
+    message_unread_counter = fields..Integer('Unread Messages counter', readonly=True)
+
     analysis = fields.Text('Analysis of Alert', help="Enter the analysis of the alert")
 
     state = fields.Selection([('1', 'Pendiente'), ('2', 'Validado'), ('3', 'Bloqueado'), ('4','Reportado')],
         string='State')
-
-
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
