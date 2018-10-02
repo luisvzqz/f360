@@ -30,54 +30,78 @@ class F360Alerta(models.Model):
     def _default_stage_id(self):
         return self._stage_find(domain=[('fold', '=', False)]).id
 
-    name = fields.Char('Alerta', required=True, index=True, readonly=True)
-    active = fields.Boolean('Active', default=True)
-    date_action_last = fields.Datetime('Last Action', readonly=True)
-    kanban_state = fields.Selection([('grey', 'Pendiente'), ('red', 'Bloqueado'), ('green', 'Validado'), ('blue','Reportado')],
-        string='Activity State', compute='_compute_kanban_state')
-    description = fields.Text('Notes')
-    create_date = fields.Datetime('Create Date', readonly=True)
-    write_date = fields.Datetime('Update Date', readonly=True)
-    priority = fields.Selection(f360_alerta_stage.AVAILABLE_PRIORITIES, string='Priority', index=True, default=f360_alerta_stage.AVAILABLE_PRIORITIES[0][0])
-    date_closed = fields.Datetime('Closed Date', readonly=True, copy=False)
+    active = fields.Boolean('Active', default=True, store=True, copy=True)
+    id = fields.Integer('Id', required=False, store=True, readonly=True, copy=True)
+    name = fields.Char('Alerta', required=True, index=True, readonly=True, store=True, copy=True)
 
-    stage_id = fields.Many2one('x_360fin.alerta.stage', string='Stage', track_visibility='onchange', index=True,
+    date_action_last = fields.Datetime('Last Action', readonly=True, store=True, copy=True)
+    kanban_state = fields.Selection([('grey', 'Pendiente'), ('red', 'Bloqueado'), ('green', 'Validado'), ('blue','Reportado')],
+        string='Activity State', compute='_compute_kanban_state', readonly=True)
+    description = fields.Text('Notes', store=True, copy=True)
+    create_date = fields.Datetime('Create Date', readonly=True, store=True, copy=True)
+    create_uid = fields.many2one('Created by', store=True, copy=True)
+    write_date = fields.Datetime('Update Date', readonly=True)
+    priority = fields.Selection(f360_alerta_stage.AVAILABLE_PRIORITIES, string='Priority', index=True, store=True, copy=True, default=f360_alerta_stage.AVAILABLE_PRIORITIES[0][0])
+    date_closed = fields.Datetime('Closed Date', readonly=True, store=True)
+
+    stage_id = fields.Many2one('x_360fin.alerta.stage', string='Stage', track_visibility='onchange', store=True, copy=True, index=True,
         group_expand='_read_group_stage_ids', default=lambda self: self._default_stage_id())
     user_id = fields.Many2one('res.users', string='Compliance Officer', index=True, track_visibility='onchange', default=lambda self: self.env.user)
 
-    date_open = fields.Datetime('Assigned', readonly=True, default=fields.Datetime.now)
+    date_open = fields.Datetime('Assigned', readonly=True, store=True, copy=True, default=fields.Datetime.now)
     day_open = fields.Float(compute='_compute_day_open', string='Days to Assign', store=True)
     day_close = fields.Float(compute='_compute_day_close', string='Days to Close', store=True)
-    date_last_stage_update = fields.Datetime(string='Last Stage Update', index=True, default=fields.Datetime.now)
-    date_conversion = fields.Datetime('Conversion Date', readonly=True)
+    date_last_stage_update = fields.Datetime(string='Last Stage Update', store=True, index=True, copy=True, default=fields.Datetime.now)
+    date_conversion = fields.Datetime('Conversion Date', readonly=True, store=True, copy=True)
 
     # Only used for type opportunity
-    date_deadline = fields.Date('Expected Closing', help="Estimate of the date on which the alert will be late.")
-    color = fields.Integer('Color Index', default=0)
+    date_deadline = fields.Date('Expected Closing', store=True, copy=True, help="Estimate of the date on which the alert will be late.")
+
+    color = fields.Integer('Color Index', store=True, copy=True, default=0)
+
+    #Display
+    display_name = fields.Char(comodel_name="x_360fin.alerta.catalogo", string="Display name", help="Display name", readonly=True)
 
     # Alerts
-    alert_id = fields.Many2one(comodel_name="x_360fin.alerta.catalogo", string="Alerta id", required=False,
-                                     help="Alerta id", readonly=True)
-    employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee id", required=False,
-                                     help="Employee id", readonly=True)
-    partner_id = fields.Many2one(comodel_name="res.partner", string="Partner id", required=False,
-                                     help="Partner id", readonly=True)
-    company_id = fields.Many2one(comodel_name="res.company", string="Company id", required=False,
-                                 help="Company id", readonly=True)
-    invoice_id = fields.Many2one(comodel_name="account.invoice", string="Invoice id", required=False,
-                                 help="Invoice id", readonly=True)
-    payment_id = fields.Many2one(comodel_name="account.payment", string="Payment id", required=False,
-                                 help="Payment id", readonly=True)
-    user_det_id = fields.Many2one('res.users', string='User Detect', index=True, track_visibility='onchange', readonly=True)
+    alert_id = fields.Many2one(comodel_name="x_360fin.alerta.catalogo", string="Alerta id", store=True, readonly=True, copy=True, help="Alerta id")
 
-    message = fields.Text('Message of Alert', help="Enter here the message of the alert", readonly=True)
+    employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee id", required=False, help="Employee id", readonly=True, store=True, copy=True)
 
-    analysis = fields.Text('Analysis of Alert', help="Enter the analysis of the alert")
+    partner_id = fields.Many2one(comodel_name="res.partner", string="Partner id", help="Partner id", readonly=True, store=True, copy=True)
 
-    state = fields.Selection([('1', 'Pendiente'), ('2', 'Validado'), ('3', 'Bloqueado'), ('4','Reportado')],
-        string='State')
+    company_id = fields.Many2one(comodel_name="res.company", string="Company id", store=True, copy=True, required=False, help="Company id", readonly=True)
 
+    invoice_id = fields.Many2one(comodel_name="account.invoice", string="Invoice id", required=False, help="Invoice id", readonly=True, store=True, copy=True)
 
+    payment_id = fields.Many2one(comodel_name="account.payment", string="Payment id", required=False, help="Payment id", readonly=True)
+
+    user_det_id = fields.Many2one('res.users', string='User Detect', track_visibility='onchange', readonly=True, store=True, copy=True, index=True)
+
+    message = fields.Text('Message of Alert', help="Enter here the message of the alert", readonly=True, store=True, copy=True)
+
+    message_ids = fields.one2many('Messages ids', store=True)
+
+    message_channel_ids = fields.Many2one('Followers (Channels)', readonly=True)
+
+    message_follower_ids = fields.one2many('Followers', store=True)
+
+    message_is_follower = fields.Boolean('Is Follower', readonly=True)
+
+    message_last_post = fields.datetime('Last Message Date', help="	Date of the last message posted on the record", store=True, copy=True)
+
+    message_needaction = fields.Boolean('Action Needed', readonly=True)
+
+    message_needaction_counter = fields.Integer('Number of actions', readonly=True, help="Number of messages which requires an action")
+
+    message_partner_ids = fields.Many2many('Follower (Partners)', readonly=True)
+
+    message_unread = fields.Boolean('Unread Messages', readonly=True, help="If checked new messages require your attention")
+
+    message_unread_counter = fields..Integer('Unread Messages counter', readonly=True)
+
+    analysis = fields.Text('Analysis of Alert', store=True, copy=True, help="Analysis of alert")
+
+    state = fields.Selection([('1', 'Pendiente'), ('2', 'Validado'), ('3', 'Bloqueado'), ('4','Reportado')], string='State', store=True, copy=True)
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
