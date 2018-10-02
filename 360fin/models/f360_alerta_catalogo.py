@@ -23,6 +23,7 @@ class Catalogo(models.Model):
     color_type = fields.Selection([('0', 'ND'), ('1', 'Verde'), ('2', 'Amarilla'),('3','Roja') ], string='Color de alerta')
 
     count = fields.Integer('Cuenta', default=0)
+<<<<<<< HEAD
 
     create_date = fields.datetime('Created on', store=True, copy=True)
 
@@ -47,3 +48,5 @@ class Catalogo(models.Model):
     write_date = fields.datetime('Last Updated on', store=True, copy=True)
 
     write_uid = fields.many2one('Last Updated by', store=True, copy=True)
+=======
+>>>>>>> f5d3a3acbd2befc3815dd6f0424a961e7dd7e0bd
