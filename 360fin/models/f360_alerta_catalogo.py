@@ -24,7 +24,7 @@ class Catalogo(models.Model):
 
     count = fields.Integer('Cuenta', default=0)
 
-    create_date = fields.datetime('Created on', store=True, copy=True)
+    create_date = fields.Integer('Created on', store=True, copy=True)
 
     create_uid = fields.many2one('Created by', store=True, copy=True)
 
