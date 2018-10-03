@@ -30,18 +30,17 @@ class F360Alerta(models.Model):
     def _default_stage_id(self):
         return self._stage_find(domain=[('fold', '=', False)]).id
 
-<<<<<<< HEAD
     active = fields.Boolean('Active', default=True, store=True, copy=True)
     id = fields.Integer('Id', required=False, store=True, readonly=True, copy=True)
     name = fields.Char('Alerta', required=True, index=True, readonly=True, store=True, copy=True)
 
     date_action_last = fields.Datetime('Last Action', readonly=True, store=True, copy=True)
-=======
+
     id = fields.Integer('Id', required=False, index=False, store=True, readonly=True, copy=True)
     name = fields.Char('Alerta', required=True, index=True, readonly=True)
     active = fields.Boolean('Active', default=True)
     date_action_last = fields.Datetime('Last Action', readonly=True)
->>>>>>> f5d3a3acbd2befc3815dd6f0424a961e7dd7e0bd
+
     kanban_state = fields.Selection([('grey', 'Pendiente'), ('red', 'Bloqueado'), ('green', 'Validado'), ('blue','Reportado')],
         string='Activity State', compute='_compute_kanban_state', readonly=True)
     description = fields.Text('Notes', store=True, copy=True)
@@ -106,9 +105,8 @@ class F360Alerta(models.Model):
 
     message_partner_ids = fields.Many2many('Follower (Partners)', readonly=True)
 
-<<<<<<< HEAD
     message_unread = fields.Boolean('Unread Messages', readonly=True, help="If checked new messages require your attention")
-=======
+
     message_channel_ids = fields.Many2one('Followers (Channels)', readonly=True)
 
     message_is_follower = fields.Boolean('Is Follower', readonly=True)
@@ -124,17 +122,13 @@ class F360Alerta(models.Model):
     message_unread_counter = fields..Integer('Unread Messages counter', readonly=True)
 
     analysis = fields.Text('Analysis of Alert', help="Enter the analysis of the alert")
->>>>>>> f5d3a3acbd2befc3815dd6f0424a961e7dd7e0bd
 
     message_unread_counter = fields..Integer('Unread Messages counter', readonly=True)
 
-<<<<<<< HEAD
     analysis = fields.Text('Analysis of Alert', store=True, copy=True, help="Analysis of alert")
 
     state = fields.Selection([('1', 'Pendiente'), ('2', 'Validado'), ('3', 'Bloqueado'), ('4','Reportado')], string='State', store=True, copy=True)
 
-=======
->>>>>>> f5d3a3acbd2befc3815dd6f0424a961e7dd7e0bd
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         # retrieve team_id from the context and write the domain
