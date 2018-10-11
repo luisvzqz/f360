@@ -18,12 +18,16 @@ class F360Impacto(models.Model):
     _name = "x_360fin.impacto"
     _description = "360fin.impacto"
 
-    x_company_id = fields.Many2one(comodel_name="res.company", string="Company id", required=False,
-                                     help="Company id")
-    x_impacto = fields.Integer('Impacto PLD', default=1, help="Impacto PLD")
-    x_name = fields.Char('Impacto', required=True, index=True, readonly=True)
-    x_partner_id = fields.Many2one(comodel_name="res.partner", string="Partner id", required=False,
-                                   help="Partner id")
-    x_max = fields.Float(compute='_compute_x_max', string='Máximo', store=True)
-    x_min = fields.Float(compute='_compute_x_min', string='Mínimo', store=True)
+    create_date = fields.datetime(string="Created on", store=True, copy=True)
+    create_uid = fields.Many2one(string="Created by", store=True, copy=True, comodel_name="res.users")
+    display_name = fields.Char(string="Display", readonly=True, size=0)
+    id = fields.Integer(string="ID", readonly=True, store=True, copy=True)
+    write_date = fields.datetime(string="Last Updated on", store=True, copy=True)
+    write_uid = fields.Many2one(string="Last Updated by", store=True, copy=True, comodel_name="res.users")
 
+    x_company_id = fields.Many2one(string="Compañía id", store=True, copy=True, comodel_name="res.company", on_delete=NULL, help="Company id")
+    x_impacto = fields.Integer(string="Impacto PLD", store=True, copy=True, default=1, help="Impacto PLD")
+    x_name = fields.Char(string="Nombre", store=True, size=0)
+    x_partner_id = fields.Many2one(string="Socio ID", store=True, copy=True, comodel_name="res.partner", on_delete=NULL, help="Partner id")
+    x_max = fields.Float(string='Máximo', store=True, copy=True, compute='_compute_x_max', help="Maximum")
+    x_min = fields.Float(string='Mínimo', store=True, copy=True, compute='_compute_x_min', help="Minimum")

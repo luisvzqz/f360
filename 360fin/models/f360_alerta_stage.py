@@ -22,10 +22,16 @@ class Stage(models.Model):
     _rec_name = 'name'
     _order = "sequence, name, id"
 
-    name = fields.Char('Stage Name', required=True, translate=True)
-    sequence = fields.Integer('Sequence', default=1, help="Used to order stages. Lower is better.")
-    requirements = fields.Text('Requirements', help="Enter here the internal requirements for this stage. It will appear as a tooltip over the stage's name.")
-    legend_priority = fields.Text('Priority Management Explanation', translate=True,
+    create_date = fields.datetime(string="Created on", store=True, copy=True)
+    create_uid = fields.Many2one(string="Created by", store=True, copy=True, comodel_name="res.users")
+    display_name = fields.Char(string="Display Name", readonly=True, size=0)
+    id = fields.Integer(string="ID", readonly=True, store=True, copy=True)
+    name = fields.Char(string="Stage Name", required=True, store=True, copy=True, translate=True, size=0)
+    sequence = fields.Integer('Sequence', store=True, copy=True, default=1, help="Used to order stages. Lower is better.")
+    requirements = fields.Text(string="Requirements", store=True, copy=True,
+        help="Enter here the internal requirements for this stage. It will appear as a tooltip over the stage's name.")
+    legend_priority = fields.Text(string="Priority Management Explanation", store=True, copy=True, translate=True,
         help='Explanation text to help users using the star and priority mechanism on stages or issues that are in this stage.')
-    fold = fields.Boolean('Folded in Pipeline',
-        help='This stage is folded in the kanban view when there are no records in that stage to display.')
+    fold = fields.Boolean(string="Folded in Pipeline", store=True, copy=True, help='This stage is folded in the kanban view when there are no records in that stage to display.')
+    write_date = fields.datetime(string="Last Updated on", store=True, copy=True)
+    write_uid = fields.Many2one(string="Last Updated by", store=True, copy=True, comodel_name="res.users")

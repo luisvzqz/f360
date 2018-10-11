@@ -18,6 +18,13 @@ class F360Garantia(models.Model):
     _name = "x_360fin.garantia"
     _description = "360fin.garantia"
 
-    x_codigo = fields.Char('Codigo', required=True, index=True)
-    x_impacto = fields.Integer('Impacto PLD', default=1, help="Impacto PLD")
-    x_name = fields.Char('garantia', required=True, index=True)
+    create_date = fields.datetime(string="Created on", store=True, copy=True)
+    create_uid = fields.Many2one(string="Created by", store=True, copy=True, comodel_name="res.users")
+    display_name = fields.Char(string="Display", readonly=True, size=0)
+    id = fields.Integer(string="ID", readonly=True, store=True, copy=True)
+    write_date = fields.datetime(string="Last Updated on", store=True, copy=True)
+    write_uid = fields.Many2one(string="Last Updated by", store=True, copy=True, comodel_name="res.users")
+
+    x_codigo = fields.Char(string="Codigo", store=True, copy=True, size=3, help="Código")
+    x_impacto = fields.Integer(string="Impacto PLD", store=True, copy=True, default=1, help="Impacto PLD")
+    x_name = fields.Char(string="Garantía", store=True, size=0)

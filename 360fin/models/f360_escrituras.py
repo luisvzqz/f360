@@ -18,14 +18,21 @@ class F360Escrituras(models.Model):
     _name = "x_360fin.escrituras"
     _description = "360fin.escrituras"
 
-    x_name = fields.Char('Nombre', required=True, index=True)
-    x_company_id = fields.Many2one(comodel_name="res.company", string="Compañía", required=False, help="Compañía")
-    x_partner_id = fields.Many2one(comodel_name="res.partner", string="Partner", required=False, help="Asociado/Cliente")
-    x_doc = fields.Binary(string="Documento", help="Copia documento")
-    x_fedatario = fields.Char(string="Fedatario", required=False, help="Fedatario")
-    x_folio = fields.Char(string="Folio", required=False, help="Folio")
+    create_date = fields.datetime(string="Created on", store=True, copy=True)
+    create_uid = fields.Many2one(string="Created by", store=True, copy=True, comodel_name="res.users")
+    display_name = fields.Char(string="Display", readonly=True, size=0)
+    id = fields.Integer(string="ID", readonly=True, store=True, copy=True)
+    write_date = fields.datetime(string="Last Updated on", store=True, copy=True)
+    write_uid = fields.Many2one(string="Last Updated by", store=True, copy=True, comodel_name="res.users")
+
+    x_name = fields.Char(string="Nombre", store=True, size=0)
+    x_company_id = fields.Many2one(string="Compañía id", store=True, copy=True, comodel_name="res.company", on_delete=NULL)
+    x_partner_id = fields.Many2one(comodel_name="res.partner", string="Partner", store=True, copy=True, help="Asociado/Cliente", on_delete=NULL)
+    x_doc = fields.Binary(string="Documento", store=True, copy=True, help="Copia documento")
+    x_fedatario = fields.Char(string="Fedatario", store=True, copy=True, help="Fedatario", size=0)
+    x_folio = fields.Char(string="Folio", store=True, copy=True, help="Folio", size=0)
     x_tipo = fields.Selection([('1','Acta Constitutiva'),
                                      ('2','Poder Legal'),
                                      ('3','Cambio denominación'),
                                      ('4','Reforma Estatutos'),],
-                                      string="Tipo documento", required=False, help="Tipo de documento a registrar")
+                                      string="Tipo documento", store=True, copy=True, help="Tipo de documento a registrar")
