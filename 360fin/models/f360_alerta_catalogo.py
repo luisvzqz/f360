@@ -13,7 +13,7 @@ AVAILABLE_PRIORITIES = [
 
 class Catalogo(models.Model):
 
-    _name = "x_360fin.alerta.catalogo"¿0
+    _name = "x_360fin.alerta.catalogo"
     _description = "360fin.alerta.catalogo"
     _rec_name = 'name'
     _order = "sequence, name, id"
