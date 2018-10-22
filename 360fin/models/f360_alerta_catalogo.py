@@ -32,5 +32,5 @@ class Catalogo(models.Model):
     name = fields.Char(string="Catálogo Alerta", required=True, store=True, copy=True, translate=True, size=0)
     recommend = fields.Text(string="Recommendation", store=True, copy=True, translate=True, help="Recommendation")
     rule = fields.Text(string="Rule", store=True, copy=True, translate=True, help="Rule")
-    sequence = fields.Integer(string="Sequence"+, store=True, copy=True, default=1, help="Used to order stages. Lower is better.")
+    sequence = fields.Integer(string="Sequence", store=True, copy=True, default=1, help="Used to order stages. Lower is better.")
     type =  fields.Selection([('0', 'ND'), ('1', 'Inusual'), ('2', 'Relevante'),('3','Inusual/Relevante'), ('4','Listas Negras') ], string="Tipo de alerta", store=True, copy=True)
