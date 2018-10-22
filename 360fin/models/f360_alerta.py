@@ -14,7 +14,6 @@ from . import f360_alerta_stage
 
 _logger = logging.getLogger(__name__)
 
-
 class F360Alerta(models.Model):
     _name = "x_360fin.alerta"
     _inherit = ['mail.thread']
@@ -30,33 +29,32 @@ class F360Alerta(models.Model):
     def _default_stage_id(self):
         return self._stage_find(domain=[('fold', '=', False)]).id
 
-    active = fields.Boolean(string="Active", store=True, copy=True, default=True)
+    create_date = fields.datetime(string="Created on", store=True, copy=True)
+    create_uid = fields.Many2one(string="Created by", store=True, copy=True, comodel_name='res.users')
+    display_name = fields.Char(string="Display", readonly=True, size=0)
     id = fields.Integer(string="ID", readonly=True, store=True, copy=True)
+    write_date = fields.datetime(string="Last Updated on", store=True, copy=True)
+    write_uid = fields.Many2one(string="Last Updated by", store=True, copy=True, comodel_name='res.users')
+
+    active = fields.Boolean(string="Active", store=True, copy=True)
     name = fields.Char(string="Alerta", required=True, index=True, readonly=True, store=True, copy=True, size=0)
     date_action_last = fields.Datetime(string="Last Action", readonly=True, store=True, copy=True)
-    kanban_state = fields.Selection([('grey', 'Pendiente'), ('red', 'Bloqueado'), ('green', 'Validado'), ('blue','Reportado')],
-        string='Activity State', readonly=True)
+    kanban_state = fields.Selection([('grey', 'Pendiente'), ('red', 'Bloqueado'), ('green', 'Validado'), ('blue','Reportado')], string="Activity State", readonly=True)
     description = fields.Text(string="Notes", store=True, copy=True)
-    create_date = fields.Datetime(string="Create date", readonly=True, store=True, copy=True)
-    create_uid = fields.many2one(string="Created by", store=True, copy=True, comodel_name="res.users")
-    write_date = fields.Datetime('Update Date', readonly=True)
-    priority = fields.Selection(f360_alerta_stage.AVAILABLE_PRIORITIES, string='Priority', store=True, index=True, copy=True, default=f360_alerta_stage.AVAILABLE_PRIORITIES[0][0])
+    priority = fields.Selection(f360_alerta_stage.AVAILABLE_PRIORITIES, string="Priority", store=True, index=True, copy=True, default=f360_alerta_stage.AVAILABLE_PRIORITIES[0][0])
     date_closed = fields.Datetime(string="Closed Date", readonly=True, store=True)
-    stage_id = fields.Many2one(string='Stage', track_visibility='onchange', store=True, copy=True, index=True,
-        group_expand='_read_group_stage_ids', default=lambda self: self._default_stage_id(), comodel_name="x_360fin.alerta.stage")
-    user_id = fields.Many2one('res.users', string='Compliance Officer', index=True, track_visibility='onchange', default=lambda self: self.env.user)
+    stage_id = fields.Many2one(string="Stage", track_visibility="onchange", store=True, copy=True, index=True,
+        group_expand="_read_group_stage_ids", default=lambda self: self._default_stage_id(), comodel_name="x_360fin.alerta.stage")
+    user_id = fields.Many2one(string="Compliance Officer", index=True, track_visibility="onchange", comodel_name="res.users", default=lambda self: self.env.user)
     date_open = fields.Datetime(string="Assigned", readonly=True, store=True, copy=True, default=fields.Datetime.now)
-    day_open = fields.Float(string='Days to Assign', readonly=True, store=True)
-    day_close = fields.Float(string='Days to Close', readonly=True, store=True)
-    date_last_stage_update = fields.Datetime(string='Last Stage Update', store=True, index=True, copy=True, default=fields.Datetime.now)
+    day_open = fields.Float(string="Days to Assign", readonly=True, store=True)
+    day_close = fields.Float(string="Days to Close", readonly=True, store=True)
+    date_last_stage_update = fields.Datetime(string="Last Stage Update", store=True, index=True, copy=True, default=fields.Datetime.now)
     date_conversion = fields.Datetime(string="Conversion Date", readonly=True, store=True, copy=True)
 
     # Only used for type opportunity
     date_deadline = fields.Date(string="Expected Closing", store=True, copy=True, help="Estimate of the date on which the alert will be late.")
     color = fields.Integer(string="Color Index", store=True, copy=True, default=0)
-
-    #Display
-    display_name = fields.Char(string="Display name", readonly=True, size=0)
 
     # Alerts
     alert_id = fields.Many2one(string="Alerta id", readonly=True, store=True, copy=True, comodel_name="x_360fin.alerta.catalogo", help="Alerta id")
@@ -65,11 +63,11 @@ class F360Alerta(models.Model):
     company_id = fields.Many2one(string="Company id", readonly=True, store=True, copy=True, help="Company id", comodel_name="res.company")
     invoice_id = fields.Many2one(string="Invoice id", readonly=True, store=True, copy=True, help="Invoice id", comodel_name="account.invoice")
     payment_id = fields.Many2one(string="Payment id", readonly=True, store=True, copy=True, help="Payment id", comodel_name="account.payment")
-    user_det_id = fields.Many2one(string='User Detect', track_visibility='onchange', readonly=True, store=True, copy=True, index=True, comodel_name="res.user")
+    user_det_id = fields.Many2one(string="User Detect", track_visibility="onchange", readonly=True, store=True, copy=True, index=True, comodel_name="res.user")
     message = fields.Text(string="Message of Alert", readonly=True, store=True, copy=True, help="Enter here the message of the alert")
     message_ids = fields.one2many(string="Messages ids", store=True, comodel_name="mail.message", relation_field="res_id")
     message_channel_ids = fields.Many2one(string="Followers (Channels)", readonly=True, comodel_name="mail.channel")
-    message_follower_ids = fields.one2many(string="Followers", store=True, comodel_name="mail.followers")
+    message_follower_ids = fields.one2many(string="Followers", store=True, comodel_name="mail.followers", relation_field="res_id")
     message_last_post = fields.datetime(string="Last Message Date", store=True, copy=True, help="Date of the last message posted on the record")
     message_needaction = fields.Boolean(string="Action Needed", readonly=True, help="If checked, new messages require your attention.If checked,")
     message_needaction_counter = fields.Integer(string="Number of actions", readonly=True, help="Number of messages which requires an action")
@@ -80,8 +78,8 @@ class F360Alerta(models.Model):
     message_is_needaction_counter = fields.Integer(string="Number of actions", readonly=True)
     message_is_partner_ids = fields.Many2many(string="Follower (Partners)", readonly=True)
     analysis = fields.Text(string="Analysis of Alert", store=True, copy=True, help="Enter the analysis of the alert")
-    message_unread_counter = fields.Integer(string="Unread Messages counter", readonly=True)
-    state = fields.Selection([('1', 'Pendiente'), ('2', 'Validado'), ('3', 'Bloqueado'), ('4','Reportado')], string='State', store=True, copy=True)
+    message_unread_counter = fields.Integer(string="Unread Messages counter", readonly=True, help="Number of unread messages")
+    state = fields.Selection([('1', 'Pendiente'), ('2', 'Validado'), ('3', 'Bloqueado'), ('4','Reportado')], string="State", store=True, copy=True)
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
